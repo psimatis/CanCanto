@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:canto/Components/NavigationButton.dart';
 import 'vocabulary_screen.dart';
+import 'package:canto/constants.dart';
 
 class CanCantoScreen extends StatefulWidget {
 
@@ -12,21 +12,9 @@ class CanCantoScreen extends StatefulWidget {
 }
 
 class _CanCantoScreenState extends State<CanCantoScreen> {
-  String randomPhrase = generateRandomPhrase();
+  String randomPhrase = VocabularyScreen.generateRandomPhrase();
   TextEditingController userInputController = TextEditingController();
   String resultMessage = '';
-
-  static String generateRandomPhrase() {
-    List<String> phrases = [
-      "Flutter is awesome!",
-      "Dart is a great language.",
-      "Can Canto is fun to use.",
-      "OpenAI GPT-3 is amazing!",
-    ];
-    Random random = Random();
-    int randomIndex = random.nextInt(phrases.length);
-    return phrases[randomIndex];
-  }
 
   void checkInput() {
     String userInput = userInputController.text;
@@ -40,7 +28,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
       });
     }
     setState(() {
-      randomPhrase = generateRandomPhrase();
+      randomPhrase = VocabularyScreen.generateRandomPhrase();
       userInputController.clear();
     });
   }
@@ -62,16 +50,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
               SizedBox(height: 20),
               TextField(
                 controller: userInputController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter the phrase',
-                  labelStyle: TextStyle(color: Colors.red), // Change label color to red
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red), // Set the underline color to red
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red), // Set the focused underline color to red
-                  ),
-                ),
+                decoration: inputTextStyle,
               ),
               SizedBox(height: 10),
               ElevatedButton(
