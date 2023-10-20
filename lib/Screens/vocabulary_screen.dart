@@ -24,7 +24,7 @@ class VocabularyScreen extends StatelessWidget {
     return Scaffold(
         appBar:
         AppBar(
-          title: Text('Vocabulary'),
+          title: const Text('Vocabulary'),
         ),
         body:
         NavigationButton(
