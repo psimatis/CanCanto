@@ -12,7 +12,7 @@ class CanCantoApp extends StatelessWidget {
         primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.black,
       ),
-      initialRoute: CanCantoScreen.id,
+      initialRoute: VocabularyScreen.id,
       routes: {
         CanCantoScreen.id: (context) => CanCantoScreen(),
         VocabularyScreen.id: (context) => VocabularyScreen(),

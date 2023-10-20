@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:canto/Components/NavigationButton.dart';
+import 'vocabulary_screen.dart';
 
 class CanCantoScreen extends StatefulWidget {
 
@@ -37,7 +39,6 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
         resultMessage = 'Wrong!';
       });
     }
-    // Generate a new random phrase
     setState(() {
       randomPhrase = generateRandomPhrase();
       userInputController.clear();
@@ -88,6 +89,12 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
                   color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
                 ),
               ),
+              NavigationButton(
+                title:'Go to vocabulary',
+                onPressed: () {
+                  Navigator.pushNamed(context, VocabularyScreen.id);
+                },
+              )
             ],
           ),
         ),

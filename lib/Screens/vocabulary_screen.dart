@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'cancanto_screen.dart';
+import 'package:canto/Components/NavigationButton.dart';
 
 class VocabularyScreen extends StatelessWidget {
 
@@ -10,14 +12,13 @@ class VocabularyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Vocabulary'),
       ),
-      // body: VocabularyList(), // Create a VocabularyList widget to display phrases
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Navigate to the screen where the user can add a new phrase
-      //     Navigator.push(context, MaterialPageRoute(builder: (context) => AddPhraseScreen()));
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
+      body:
+        NavigationButton(
+          title:'Back to quiz',
+          onPressed: () {
+            Navigator.pushNamed(context, CanCantoScreen.id);
+            },
+        )
     );
   }
 }
