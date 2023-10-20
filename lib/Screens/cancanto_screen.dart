@@ -7,7 +7,6 @@ class CanCantoScreen extends StatefulWidget {
 
   static const String id = 'cancanto_screen';
 
-
   @override
   _CanCantoScreenState createState() => _CanCantoScreenState();
 }
