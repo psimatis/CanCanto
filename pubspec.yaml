@@ -1,5 +1,5 @@
 name: canto
-description: A new Flutter project.
+english: A new Flutter project.
 
 publish_to: 'none'
 
@@ -11,10 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: ^2.0.0
+  sqflite: ^2.0.0+3
   path: ^1.8.3
-  path_provider: ^2.0.2
-#  provider: ^5.0.0
+  flutter_staggered_grid_view: ^0.7.0
 
 dev_dependencies:
   flutter_test:

@@ -12,7 +12,7 @@ class CanCantoScreen extends StatefulWidget {
 }
 
 class _CanCantoScreenState extends State<CanCantoScreen> {
-  String randomPhrase = VocabularyScreen.generateRandomPhrase();
+  String randomPhrase = 'lalala';
   TextEditingController userInputController = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
@@ -31,7 +31,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
       });
     }
     setState(() {
-      randomPhrase = VocabularyScreen.generateRandomPhrase();
+      randomPhrase = 'lalala';
       userInputController.clear();
     });
     attempts++;
@@ -84,7 +84,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
               ),
               SizedBox(height: 10),
               NavigationButton(
-                title:'Go to vocabulary',
+                cantonese:'Go to vocabulary',
                 onPressed: () {
                   Navigator.pushNamed(context, VocabularyScreen.id);
                 },
