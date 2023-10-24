@@ -23,7 +23,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   @override
   void initState() {
     super.initState();
-
+    phrases = [];
     refreshPhrases();
   }
 
@@ -77,9 +77,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         body: Column(
           children: <Widget>[
             buildPhrases(),
-            Text('Your Text'),
             NavigationButton(
-              cantonese:'Back to quiz',
+              title:'Back to quiz',
               onPressed: () {
                 Navigator.pushNamed(context, CanCantoScreen.id);
                 },

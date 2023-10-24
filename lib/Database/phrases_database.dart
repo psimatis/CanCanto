@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'phrase.dart';
+import 'dart:math';
 
 class PhrasesDatabase {
   static final PhrasesDatabase instance = PhrasesDatabase._init();
@@ -12,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test.db');
+    _database = await _initDB('test1.db');
     return _database!;
   }
 
@@ -43,7 +44,7 @@ CREATE TABLE $tablePhrases (
     return phrase.copy(id: id);
   }
 
-  Future<Phrase> readNote(int id) async {
+  Future<Phrase> readPhrase(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -58,6 +59,22 @@ CREATE TABLE $tablePhrases (
     } else {
       throw Exception('ID $id not found');
     }
+  }
+
+  Future<Phrase> getRandomPhrase() async {
+    final Database db = await database;
+
+    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ?? 0;
+    final randomIndex = Random().nextInt(count) + 1;
+
+    final maps = await db.query(
+      tablePhrases,
+      columns: PhraseFields.values,
+      where: '${PhraseFields.id} = ?',
+      whereArgs: [randomIndex],
+    );
+    print(maps.toString());
+    return Phrase.fromJson(maps.first);
   }
 
   Future<List<Phrase>> readAllNotes() async {

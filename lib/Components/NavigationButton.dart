@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NavigationButton extends StatelessWidget {
-  NavigationButton({required this.cantonese, required this.onPressed});
+  NavigationButton({required this.title, required this.onPressed});
 
-  final String cantonese;
+  final String title;
   final VoidCallback onPressed;
 
   @override
@@ -11,7 +11,7 @@ class NavigationButton extends StatelessWidget {
     return Center(
       child: MaterialButton(
         onPressed: onPressed,
-        child: Text(cantonese),
+        child: Text(title),
       ),
     );
   }

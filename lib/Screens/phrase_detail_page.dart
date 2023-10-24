@@ -29,7 +29,7 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
   Future refreshNote() async {
     setState(() => isLoading = true);
 
-    phrase = await PhrasesDatabase.instance.readNote(widget.phraseId);
+    phrase = await PhrasesDatabase.instance.readPhrase(widget.phraseId);
 
     setState(() => isLoading = false);
   }

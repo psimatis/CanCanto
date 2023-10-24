@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:canto/Components/NavigationButton.dart';
 import 'vocabulary_screen.dart';
 import 'package:canto/constants.dart';
+import 'package:canto/Database/phrases_database.dart';
+import 'package:canto/Database/phrase.dart';
 
 class CanCantoScreen extends StatefulWidget {
 
@@ -12,26 +14,25 @@ class CanCantoScreen extends StatefulWidget {
 }
 
 class _CanCantoScreenState extends State<CanCantoScreen> {
-  String randomPhrase = 'lalala';
+  late Phrase randomPhrase = Phrase(cantonese: 'a', english: 'b');
   TextEditingController userInputController = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
   int correctAttempts = 0;
 
-  void checkInput() {
+  void checkInput() async {
     String userInput = userInputController.text;
-    if (userInput == randomPhrase) {
-      setState(() {
-        resultMessage = 'Correct!';
-        correctAttempts++;
-      });
-    } else {
-      setState(() {
-        resultMessage = 'Wrong!';
-      });
+    String result = '';
+
+    if (userInput == randomPhrase.english) {
+      result = 'Correct!';
+      correctAttempts++;
     }
+    else result = 'Wrong!';
+    Phrase newPhrase = await PhrasesDatabase.instance.getRandomPhrase();
     setState(() {
-      randomPhrase = 'lalala';
+      resultMessage = result;
+      randomPhrase = newPhrase;
       userInputController.clear();
     });
     attempts++;
@@ -52,7 +53,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(randomPhrase,
+              Text(randomPhrase.cantonese,
                 style: const TextStyle(fontSize: 24),
               ),
               SizedBox(height: 20),
@@ -84,7 +85,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
               ),
               SizedBox(height: 10),
               NavigationButton(
-                cantonese:'Go to vocabulary',
+                title:'Go to vocabulary',
                 onPressed: () {
                   Navigator.pushNamed(context, VocabularyScreen.id);
                 },
