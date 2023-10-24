@@ -21,17 +21,16 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
 
   void initState() {
     super.initState();
-    getNewPhrase();
+    getNewPhrase(); // TODO: If the DB is empty this gives an error.
   }
 
   void checkInput() {
-    String result = '';
+    String result = 'Correct!';
     attempts++;
 
-    if (userInput.text == randomPhrase.english) {
-      result = 'Correct!';
+    if (userInput.text == randomPhrase.english)
       correctAttempts++;
-    } else
+    else
       result = 'Wrong!';
 
     setState(() {
@@ -57,6 +56,7 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Can Canto'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
@@ -74,8 +74,8 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                  checkInput();
-                  getNewPhrase();
+                checkInput();
+                getNewPhrase();
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.red, // Set the button's background color to red

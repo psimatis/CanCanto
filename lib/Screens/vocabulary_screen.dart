@@ -27,13 +27,6 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     refreshPhrases();
   }
 
-  @override
-  void dispose() {
-    PhrasesDatabase.instance.close();
-
-    super.dispose();
-  }
-
   Future refreshPhrases() async {
     setState(() => isLoading = true);
 
@@ -74,15 +67,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         AppBar(
           title: const Text('Vocabulary'),
         ),
-        body: Column(
+        body: ListView(
           children: <Widget>[
             buildPhrases(),
-            NavigationButton(
-              title:'Back to quiz',
-              onPressed: () {
-                Navigator.pushNamed(context, CanCantoScreen.id);
-                },
-            ),
           ],
         ),
 

@@ -13,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test1.db');
+    _database = await _initDB('test3.db');
     return _database!;
   }
 
