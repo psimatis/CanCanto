@@ -19,7 +19,7 @@ void main() async {
 
 Future<bool> checkDatabaseStatus(PhrasesDatabase phrasesDatabase) async {
   // Check if the database is empty or not created yet
-  final allPhrases = await phrasesDatabase.readAllNotes();
+  final allPhrases = await phrasesDatabase.readAllPhrases();
   return allPhrases.isEmpty;
 }
 

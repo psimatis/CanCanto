@@ -64,8 +64,16 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
+  // Function to fetch and display the latest data
+  void fetchData() async {
+    // Fetch data from the database
+    final data = await PhrasesDatabase.instance..readAllPhrases();
+    // Update the state or content with the latest data
+  }
+
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Can Canto'),

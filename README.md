@@ -16,10 +16,11 @@ It consists of four screens:
 - Edit the user input (i.e., lowercase, remove trailing spaces).
 - Make quiz work both ways (i.e., english to cantonese and vice versa).
 - If the DB is empty start with the vocabulary screen.
-- Moved database to main.
+- Moved DB to main.
+- Fix deletion bug. Used ID instead of value.
 
 ## ToDo
-- Fix deletion bug. If I delete a phrase and then press the back button. The DB crashes.
+
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
 - Fix back/go to quiz button if DB is empty and started with vocabulary screen.
 - Add statistics in detail page (e.g., attempts, success rate).

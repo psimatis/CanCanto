@@ -5,6 +5,7 @@ import 'add_edit_phrase_screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'phrase_detail_screen.dart';
 import '../Components/phrase_card_widget.dart';
+import 'quiz_screen.dart';
 
 class VocabularyScreen extends StatefulWidget {
   final PhrasesDatabase phrasesDatabase;
@@ -29,9 +30,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   Future refreshPhrases() async {
     setState(() => isLoading = true);
-
-    phrases = await PhrasesDatabase.instance.readAllNotes();
-
+    phrases = await PhrasesDatabase.instance.readAllPhrases();
     setState(() => isLoading = false);
   }
 
@@ -65,6 +64,15 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         appBar:
         AppBar(
           title: const Text('Vocabulary'),
+          actions: <Widget>[
+            // Add an IconButton for navigation to QuizScreen
+            IconButton(
+              icon: Icon(Icons.arrow_forward), // Use a suitable icon
+              onPressed: () {
+                Navigator.pushNamed(context, QuizScreen.id);
+              },
+            ),
+          ],
         ),
         body: ListView(
           children: <Widget>[

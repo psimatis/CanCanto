@@ -22,11 +22,10 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
   @override
   void initState() {
     super.initState();
-
-    refreshNote();
+    refreshPhrase();
   }
 
-  Future refreshNote() async {
+  Future refreshPhrase() async {
     setState(() => isLoading = true);
 
     phrase = await PhrasesDatabase.instance.readPhrase(widget.phraseId);
@@ -75,7 +74,7 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
           builder: (context) => AddEditPhrasePage(phrase: phrase),
         ));
 
-        refreshNote();
+        refreshPhrase();
       });
 
   Widget deleteButton() => IconButton(

@@ -13,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test5.db');
+    _database = await _initDB('test7.db');
     return _database!;
   }
 
@@ -63,21 +63,22 @@ CREATE TABLE $tablePhrases (
 
   Future<Phrase> getRandomPhrase() async {
     final Database db = await database;
-
     final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ?? 0;
-    final randomIndex = Random().nextInt(count) + 1;
+
+    final randomOffset = Random().nextInt(count);
 
     final maps = await db.query(
       tablePhrases,
       columns: PhraseFields.values,
-      where: '${PhraseFields.id} = ?',
-      whereArgs: [randomIndex],
+      orderBy: 'RANDOM()',
+      limit: 1,
+      offset: randomOffset,
     );
-    print(maps.toString());
+
     return Phrase.fromJson(maps.first);
   }
 
-  Future<List<Phrase>> readAllNotes() async {
+  Future<List<Phrase>> readAllPhrases() async {
     final db = await instance.database;
     final result = await db.query(tablePhrases);
     return result.map((json) => Phrase.fromJson(json)).toList();
