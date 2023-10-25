@@ -13,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test10.db');
+    _database = await _initDB('test12.db');
     return _database!;
   }
 
@@ -27,19 +27,21 @@ class PhrasesDatabase {
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const intType = 'INTEGER NOT NULL';
     
     await db.execute('''
 CREATE TABLE $tablePhrases ( 
   ${PhraseFields.id} $idType, 
   ${PhraseFields.cantonese} $textType,
-  ${PhraseFields.english} $textType
+  ${PhraseFields.english} $textType,
+  ${PhraseFields.attempts} $intType,
+  ${PhraseFields.successes} $intType
   )
 ''');
   }
 
   Future<Phrase> create(Phrase phrase) async {
     final db = await instance.database;
-    
     final id = await db.insert(tablePhrases, phrase.toJson());
     return phrase.copy(id: id);
   }

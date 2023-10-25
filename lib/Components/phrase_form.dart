@@ -12,58 +12,60 @@ class PhraseFormWidget extends StatelessWidget {
     this.english = '',
     required this.onChangedCantonese,
     required this.onChangedEnglish,
+    required int attempts,
+    required int successes,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
+              const Row(
+                children: [],
+              ),
+              buildPhrase(),
+              const SizedBox(height: 8),
+              buildTranslation(),
+              const SizedBox(height: 16),
             ],
           ),
-          buildTitle(),
-          const SizedBox(height: 8),
-          buildDescription(),
-          const SizedBox(height: 16),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
-  Widget buildTitle() => TextFormField(
-    maxLines: 1,
-    initialValue: cantonese,
-    style: const TextStyle(
-      color: Colors.white70,
-      fontWeight: FontWeight.bold,
-      fontSize: 24,
-    ),
-    decoration: const InputDecoration(
-      border: InputBorder.none,
-      hintText: 'Title',
-      hintStyle: TextStyle(color: Colors.white70),
-    ),
-    validator: (title) =>
-    title != null && title.isEmpty ? 'The title cannot be empty' : null,
-    onChanged: onChangedCantonese,
-  );
+  Widget buildPhrase() => TextFormField(
+        maxLines: 1,
+        initialValue: cantonese,
+        style: const TextStyle(
+          color: Colors.white70,
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Cantonese Phrase',
+          hintStyle: TextStyle(color: Colors.white70),
+        ),
+        validator: (phrase) => phrase != null && phrase.isEmpty
+            ? 'The phrase cannot be empty'
+            : null,
+        onChanged: onChangedCantonese,
+      );
 
-  Widget buildDescription() => TextFormField(
-    maxLines: 5,
-    initialValue: english,
-    style: const TextStyle(color: Colors.white60, fontSize: 18),
-    decoration: const InputDecoration(
-      border: InputBorder.none,
-      hintText: 'Type something...',
-      hintStyle: TextStyle(color: Colors.white60),
-    ),
-    validator: (cantonese) => cantonese != null && cantonese.isEmpty
-        ? 'The description cannot be empty'
-        : null,
-    onChanged: onChangedEnglish,
-  );
+  Widget buildTranslation() => TextFormField(
+        maxLines: 5,
+        initialValue: english,
+        style: const TextStyle(color: Colors.white60, fontSize: 18),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          hintText: 'English translation',
+          hintStyle: TextStyle(color: Colors.white60),
+        ),
+        validator: (translation) => translation != null && translation.isEmpty
+            ? 'The translation cannot be empty'
+            : null,
+        onChanged: onChangedEnglish,
+      );
 }

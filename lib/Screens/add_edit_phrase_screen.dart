@@ -19,6 +19,8 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
   final _formKey = GlobalKey<FormState>();
   late String cantonese;
   late String english;
+  late int attempts;
+  late int successes;
 
   @override
   void initState() {
@@ -26,24 +28,30 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
 
     cantonese = widget.phrase?.cantonese ?? '';
     english = widget.phrase?.english ?? '';
+    attempts = widget.phrase?.attempts ?? 0;
+    successes = widget.phrase?.successes ?? 0;
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [buildButton()],
-    ),
-    body: Form(
-      key: _formKey,
-      child: PhraseFormWidget(
-        cantonese: cantonese,
-        english: english,
-        onChangedCantonese: (cantonese) => setState(() => this.cantonese = cantonese),
-        onChangedEnglish: (english) =>
-            setState(() => this.english = english),
-      ),
-    ),
-  );
+        appBar: AppBar(
+          actions: [buildButton()],
+        ),
+        body: Form(
+          key: _formKey,
+          child: PhraseFormWidget(
+            cantonese: cantonese,
+            english: english,
+            attempts: attempts,
+            successes: successes,
+            onChangedCantonese: (cantonese) =>
+                setState(() => this.cantonese = cantonese),
+            onChangedEnglish: (english) =>
+                setState(() => this.english = english),
+            // Todo: maybe add similar for counts
+          ),
+        ),
+      );
 
   Widget buildButton() {
     final isFormValid = cantonese.isNotEmpty && english.isNotEmpty;
@@ -53,7 +61,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: isFormValid ? null : Colors.grey.shade700,
+          backgroundColor: isFormValid ? null : Colors.red,
         ),
         onPressed: addOrUpdateNote,
         child: const Text('Save'),
@@ -81,6 +89,8 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
     final note = widget.phrase!.copy(
       cantonese: cantonese,
       english: english,
+      attempts: attempts,
+      successes: successes,
     );
 
     await PhrasesDatabase.instance.update(note);
@@ -90,6 +100,8 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
     final phrase = Phrase(
       cantonese: cantonese,
       english: english,
+      attempts: attempts,
+      successes: successes,
     );
 
     await PhrasesDatabase.instance.create(phrase);

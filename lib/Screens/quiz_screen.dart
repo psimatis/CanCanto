@@ -16,13 +16,14 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  Phrase quizPhrase = Phrase(cantonese: '', english: '');
+  Phrase quizPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
   int correctAttempts = 0;
   bool order = canToEng;
 
+  @override
   void initState() {
     super.initState();
     getNewPhrase();
@@ -45,18 +46,23 @@ class _QuizScreenState extends State<QuizScreen> {
   void checkInput() {
     String result = 'Correct!';
     attempts++;
+    Phrase updatedPhrase = quizPhrase.copy(attempts: quizPhrase.attempts + 1);
+
     String translation =
         order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
 
-    if (edit(userInput.text) == translation)
+    if (edit(userInput.text) == translation) {
       correctAttempts++;
-    else
+      updatedPhrase = updatedPhrase.copy(successes: updatedPhrase.successes + 1);
+    } else {
       result = 'Wrong!';
+    }
 
     setState(() {
       resultMessage = result;
       userInput.clear();
     });
+    PhrasesDatabase.instance.update(updatedPhrase);
   }
 
   String getSuccessRate() {
@@ -77,14 +83,17 @@ class _QuizScreenState extends State<QuizScreen> {
           children: [
             Text(
               getTranslationOrder(quizPhrase),
-              style: const TextStyle(fontSize: 30),
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: userInput,
               decoration: inputTextStyle,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 checkInput();
@@ -93,9 +102,14 @@ class _QuizScreenState extends State<QuizScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.red, // Set the button's background color to red
               ),
-              child: Text('Check'),
+              child: const Text(
+                'Check',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
+              ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               resultMessage,
               style: TextStyle(
@@ -103,10 +117,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               getSuccessRate(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
               ),
             ),
@@ -114,14 +128,14 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.library_books,
-          color: Colors.white,
-        ),
         onPressed: () {
           Navigator.pushNamed(context, VocabularyScreen.id);
         },
         backgroundColor: Colors.red,
+        child: const Icon(
+          Icons.library_books,
+          color: Colors.white,
+        ),
       ),
     );
   }
