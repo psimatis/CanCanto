@@ -49,7 +49,6 @@ class PhraseCardWidget extends StatelessWidget {
     );
   }
 
-  /// To return different height for different widgets
   double getMinHeight(int index) {
     switch (index % 4) {
       case 0:

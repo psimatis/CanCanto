@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Database/phrases_database.dart';
 import '../Database/phrase.dart';
-import '../Components/phrase_form_widget.dart';
+import '../Components/phrase_form.dart';
 
 class AddEditPhrasePage extends StatefulWidget {
   final Phrase? phrase;

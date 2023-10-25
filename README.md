@@ -19,10 +19,12 @@ It consists of four screens:
 - Moved DB to main.
 - Fix deletion bug. Used ID instead of value.
 - Fix back/go to quiz button.
+- Hid success rate if the user hasn't started the quiz.
+- Added floating action button to navigate from quiz to vocabulary.
 
 ## ToDo
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
 - Add statistics in detail page (e.g., attempts, success rate).
-- Redesign vocabulary screen to be a scrollable list of words (instead of a grid).
+- Redesign vocabulary screen to a scrollable list of words (instead of a grid).
 - Beautify. Go for an all red theme.
 - Code cleanup.

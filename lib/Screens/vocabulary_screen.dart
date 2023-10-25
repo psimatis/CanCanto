@@ -4,7 +4,7 @@ import 'package:canto/Database/phrase.dart';
 import 'add_edit_phrase_screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'phrase_detail_screen.dart';
-import '../Components/phrase_card_widget.dart';
+import '../Components/phrase_card.dart';
 import 'quiz_screen.dart';
 
 class VocabularyScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       crossAxisSpacing: 2,
       children: List.generate(
         phrases.length,
-            (index) {
+        (index) {
           final phrase = phrases[index];
 
           return StaggeredGridTile.fit(
@@ -61,33 +61,26 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-        AppBar(
+      appBar: AppBar(
           title: const Text('Vocabulary'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushNamed(context, QuizScreen.id);
             },
-          )
-        ),
-        body: ListView(
-          children: <Widget>[
-            buildPhrases(),
-          ],
-        ),
-
-        floatingActionButton:
-          FloatingActionButton(
-              child:
-              Icon(Icons.add),
-              onPressed: () async {
-                await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const AddEditPhrasePage())
-                );
-                refreshPhrases();
-              }
-              ),
+          )),
+      body: ListView(
+        children: <Widget>[
+          buildPhrases(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+            await Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const AddEditPhrasePage()));
+            refreshPhrases();
+          }),
     );
   }
 }

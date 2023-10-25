@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:canto/Components/NavigationButton.dart';
 import 'vocabulary_screen.dart';
 import 'package:canto/constants.dart';
 import 'package:canto/Database/phrases_database.dart';
@@ -29,6 +28,13 @@ class _QuizScreenState extends State<QuizScreen> {
     getNewPhrase();
   }
 
+  void getNewPhrase() async {
+    Phrase p = await PhrasesDatabase.instance.getRandomPhrase();
+    setState(() {
+      quizPhrase = p;
+    });
+  }
+
   String edit(String s) => s.trim().toLowerCase();
 
   String getTranslationOrder(Phrase p) {
@@ -39,7 +45,8 @@ class _QuizScreenState extends State<QuizScreen> {
   void checkInput() {
     String result = 'Correct!';
     attempts++;
-    String translation = order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
+    String translation =
+        order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
 
     if (edit(userInput.text) == translation)
       correctAttempts++;
@@ -54,14 +61,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   String getSuccessRate() {
     double rate = correctAttempts / attempts * 100;
-    return 'Success Rate: ${(rate).toStringAsFixed(0)}%';
-  }
-
-  void getNewPhrase() async {
-    Phrase p = await PhrasesDatabase.instance.getRandomPhrase();
-    setState(() {
-      quizPhrase = p;
-    });
+    return rate.isNaN ? '' : 'Success Rate: ${(rate).toStringAsFixed(0)}%';
   }
 
   @override
@@ -77,7 +77,7 @@ class _QuizScreenState extends State<QuizScreen> {
           children: [
             Text(
               getTranslationOrder(quizPhrase),
-              style: const TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 30),
             ),
             SizedBox(height: 20),
             TextField(
@@ -99,7 +99,7 @@ class _QuizScreenState extends State<QuizScreen> {
             Text(
               resultMessage,
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 30,
                 color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
               ),
             ),
@@ -110,15 +110,18 @@ class _QuizScreenState extends State<QuizScreen> {
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 10),
-            NavigationButton(
-              title: 'Vocabulary',
-              onPressed: () {
-                Navigator.pushNamed(context, VocabularyScreen.id);
-              },
-            )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.library_books,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, VocabularyScreen.id);
+        },
+        backgroundColor: Colors.red,
       ),
     );
   }
