@@ -5,14 +5,14 @@ import 'package:canto/constants.dart';
 import 'package:canto/Database/phrases_database.dart';
 import 'package:canto/Database/phrase.dart';
 
-class CanCantoScreen extends StatefulWidget {
+class QuizScreen extends StatefulWidget {
   static const String id = 'cancanto_screen';
 
   @override
-  _CanCantoScreenState createState() => _CanCantoScreenState();
+  _QuizScreenState createState() => _QuizScreenState();
 }
 
-class _CanCantoScreenState extends State<CanCantoScreen> {
+class _QuizScreenState extends State<QuizScreen> {
   Phrase randomPhrase = Phrase(cantonese: '', english: '');
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
@@ -24,11 +24,13 @@ class _CanCantoScreenState extends State<CanCantoScreen> {
     getNewPhrase(); // TODO: If the DB is empty this gives an error.
   }
 
+  String edit(String s) => s.trim().toLowerCase();
+
   void checkInput() {
     String result = 'Correct!';
     attempts++;
 
-    if (userInput.text == randomPhrase.english)
+    if (edit(userInput.text) == edit(randomPhrase.english))
       correctAttempts++;
     else
       result = 'Wrong!';

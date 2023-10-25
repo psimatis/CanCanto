@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Database/phrases_database.dart';
 import '../Database/phrase.dart';
-import './add_edit_phrase.dart';
+import './add_edit_phrase_screen.dart';
 
 class PhraseDetailPage extends StatefulWidget {
   final int phraseId;

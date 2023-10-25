@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Screens/cancanto_screen.dart';
+import 'Screens/quiz_screen.dart';
 import 'Screens/vocabulary_screen.dart';
 
 void main() => runApp(CanCantoApp());
@@ -12,13 +12,11 @@ class CanCantoApp extends StatelessWidget {
         primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.black,
       ),
-      initialRoute: CanCantoScreen.id,
+      initialRoute: QuizScreen.id,
       routes: {
-        CanCantoScreen.id: (context) => CanCantoScreen(),
+        QuizScreen.id: (context) => QuizScreen(),
         VocabularyScreen.id: (context) => VocabularyScreen(),
       },
     );
   }
 }
-
-

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'cancanto_screen.dart';
-import 'package:canto/Components/NavigationButton.dart';
 import 'package:canto/Database/phrases_database.dart';
 import 'package:canto/Database/phrase.dart';
-import 'add_edit_phrase.dart';
+import 'add_edit_phrase_screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'phrase_detail_page.dart';
+import 'phrase_detail_screen.dart';
 import '../Components/phrase_card_widget.dart';
 
 class VocabularyScreen extends StatefulWidget {
@@ -18,7 +16,7 @@ class VocabularyScreen extends StatefulWidget {
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
   late List<Phrase> phrases;
-  bool isLoading = false;
+  bool isLoading = false; // TODO: See if I can remove this
 
   @override
   void initState() {
@@ -51,7 +49,6 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 await Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => PhraseDetailPage(phraseId: phrase.id!),
                 ));
-
                 refreshPhrases();
               },
               child: PhraseCardWidget(phrase: phrase, index: index),
