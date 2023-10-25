@@ -64,15 +64,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         appBar:
         AppBar(
           title: const Text('Vocabulary'),
-          actions: <Widget>[
-            // Add an IconButton for navigation to QuizScreen
-            IconButton(
-              icon: Icon(Icons.arrow_forward), // Use a suitable icon
-              onPressed: () {
-                Navigator.pushNamed(context, QuizScreen.id);
-              },
-            ),
-          ],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushNamed(context, QuizScreen.id);
+            },
+          )
         ),
         body: ListView(
           children: <Widget>[
@@ -94,5 +91,3 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     );
   }
 }
-
-

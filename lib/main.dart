@@ -5,32 +5,21 @@ import 'Database/phrases_database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final phrasesDatabase =
-      PhrasesDatabase.instance; // Create an instance of the database handler
-  await phrasesDatabase.database; // Initialize the database
-  final isDatabaseEmptyOrNotCreated = await checkDatabaseStatus(
-      phrasesDatabase); // Check if the database is empty or not created yet
+  final phrasesDatabase = PhrasesDatabase.instance;
+  await phrasesDatabase.database;
+  final databaseStatus = await phrasesDatabase.checkStatus(phrasesDatabase);
 
   runApp(CanCantoApp(
     phrasesDatabase: phrasesDatabase,
-    isDatabaseEmptyOrNotCreated: isDatabaseEmptyOrNotCreated,
+    emptyDatabase: databaseStatus,
   ));
-}
-
-Future<bool> checkDatabaseStatus(PhrasesDatabase phrasesDatabase) async {
-  // Check if the database is empty or not created yet
-  final allPhrases = await phrasesDatabase.readAllPhrases();
-  return allPhrases.isEmpty;
 }
 
 class CanCantoApp extends StatelessWidget {
   final PhrasesDatabase phrasesDatabase;
-  final bool isDatabaseEmptyOrNotCreated;
+  final bool emptyDatabase;
 
-  CanCantoApp({
-    required this.phrasesDatabase,
-    required this.isDatabaseEmptyOrNotCreated,
-  });
+  CanCantoApp({required this.phrasesDatabase, required this.emptyDatabase});
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +28,7 @@ class CanCantoApp extends StatelessWidget {
         primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.black,
       ),
-      initialRoute: isDatabaseEmptyOrNotCreated
-          ? VocabularyScreen
-              .id // Start with VocabularyScreen if the database is empty
-          : QuizScreen.id, // Start with QuizScreen if the database is not empty
+      initialRoute: emptyDatabase ? VocabularyScreen.id : QuizScreen.id,
       routes: {
         QuizScreen.id: (context) =>
             QuizScreen(phrasesDatabase: phrasesDatabase),

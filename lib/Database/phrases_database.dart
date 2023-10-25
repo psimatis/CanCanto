@@ -13,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test7.db');
+    _database = await _initDB('test10.db');
     return _database!;
   }
 
@@ -42,6 +42,11 @@ CREATE TABLE $tablePhrases (
     
     final id = await db.insert(tablePhrases, phrase.toJson());
     return phrase.copy(id: id);
+  }
+
+  Future<bool> checkStatus(PhrasesDatabase phrasesDatabase) async {
+    final allPhrases = await phrasesDatabase.readAllPhrases();
+    return allPhrases.isEmpty;
   }
 
   Future<Phrase> readPhrase(int id) async {

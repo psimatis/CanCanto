@@ -31,7 +31,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   String edit(String s) => s.trim().toLowerCase();
 
-  String randomizeTranslation(Phrase p) {
+  String getTranslationOrder(Phrase p) {
     order = Random().nextDouble() > 0.5 ? canToEng : !canToEng;
     return order ? p.cantonese : p.english;
   }
@@ -64,16 +64,8 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  // Function to fetch and display the latest data
-  void fetchData() async {
-    // Fetch data from the database
-    final data = await PhrasesDatabase.instance..readAllPhrases();
-    // Update the state or content with the latest data
-  }
-
   @override
   Widget build(BuildContext context) {
-    fetchData();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Can Canto'),
@@ -84,7 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              randomizeTranslation(quizPhrase),
+              getTranslationOrder(quizPhrase),
               style: const TextStyle(fontSize: 24),
             ),
             SizedBox(height: 20),

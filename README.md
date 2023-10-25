@@ -10,7 +10,7 @@ It consists of four screens:
 4) Detail: Shows the details of a specific phrase.
 
 ## Done
-- Made the skeleton of all screens (i.e., quiz, vocabulary, add/edit phrase).
+- Implemented screens (i.e., quiz, vocabulary, add/edit phrase).
 - Set up the database and CRUD operations (including random phrase retrieval).
 - Added score keeping.
 - Edit the user input (i.e., lowercase, remove trailing spaces).
@@ -18,11 +18,10 @@ It consists of four screens:
 - If the DB is empty start with the vocabulary screen.
 - Moved DB to main.
 - Fix deletion bug. Used ID instead of value.
+- Fix back/go to quiz button.
 
 ## ToDo
-
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
-- Fix back/go to quiz button if DB is empty and started with vocabulary screen.
 - Add statistics in detail page (e.g., attempts, success rate).
 - Redesign vocabulary screen to be a scrollable list of words (instead of a grid).
 - Beautify. Go for an all red theme.
