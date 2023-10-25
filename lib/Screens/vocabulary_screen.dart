@@ -7,8 +7,10 @@ import 'phrase_detail_screen.dart';
 import '../Components/phrase_card_widget.dart';
 
 class VocabularyScreen extends StatefulWidget {
-
+  final PhrasesDatabase phrasesDatabase;
   static const String id = 'vocabulary_screen';
+
+  VocabularyScreen({required this.phrasesDatabase});
 
   @override
   _VocabularyScreenState createState() => _VocabularyScreenState();

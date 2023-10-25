@@ -4,33 +4,44 @@ import 'vocabulary_screen.dart';
 import 'package:canto/constants.dart';
 import 'package:canto/Database/phrases_database.dart';
 import 'package:canto/Database/phrase.dart';
+import 'dart:math';
 
 class QuizScreen extends StatefulWidget {
+  final PhrasesDatabase phrasesDatabase;
   static const String id = 'cancanto_screen';
+
+  QuizScreen({required this.phrasesDatabase});
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  Phrase randomPhrase = Phrase(cantonese: '', english: '');
+  Phrase quizPhrase = Phrase(cantonese: '', english: '');
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
   int correctAttempts = 0;
+  bool order = canToEng;
 
   void initState() {
     super.initState();
-    getNewPhrase(); // TODO: If the DB is empty this gives an error.
+    getNewPhrase();
   }
 
   String edit(String s) => s.trim().toLowerCase();
 
+  String randomizeTranslation(Phrase p) {
+    order = Random().nextDouble() > 0.5 ? canToEng : !canToEng;
+    return order ? p.cantonese : p.english;
+  }
+
   void checkInput() {
     String result = 'Correct!';
     attempts++;
+    String translation = order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
 
-    if (edit(userInput.text) == edit(randomPhrase.english))
+    if (edit(userInput.text) == translation)
       correctAttempts++;
     else
       result = 'Wrong!';
@@ -49,7 +60,7 @@ class _QuizScreenState extends State<QuizScreen> {
   void getNewPhrase() async {
     Phrase p = await PhrasesDatabase.instance.getRandomPhrase();
     setState(() {
-      randomPhrase = p;
+      quizPhrase = p;
     });
   }
 
@@ -65,7 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              randomPhrase.cantonese,
+              randomizeTranslation(quizPhrase),
               style: const TextStyle(fontSize: 24),
             ),
             SizedBox(height: 20),

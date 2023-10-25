@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const bool canToEng = true;
+
 const inputTextStyle = InputDecoration(
   labelText: 'Type the translation',
   labelStyle: TextStyle(color: Colors.red), // Change label color to red
