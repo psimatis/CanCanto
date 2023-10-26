@@ -24,6 +24,7 @@ It consists of four screens:
 - Add statistics in detail page (e.g., attempts, success rate).
 - Add correct (previous) phrase to facilitate learning.
 - Add statistics plot in detail page.
+- Beautify go for all red theme
 
 ## ToDo
 - Add comment for each phrase.
@@ -32,5 +33,4 @@ It consists of four screens:
 - Add statistics depending on the translation order.
 - Redesign vocabulary screen to a scrollable list of words (instead of a grid).
 - Move database file to an easy to find location.
-- Beautify. Go for an all red theme.
 - Code cleanup.

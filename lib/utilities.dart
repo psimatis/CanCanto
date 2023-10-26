@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 
 const bool canToEng = true;
 
+const Map<String, Color> palette = {
+  'cantoneseGold': Color(0xFFFFD600),
+  'dragonBoatGreen': Color(0xFF3FA443),
+  'kowloonOrange': Color(0xFFFF9800),
+  'dimSumRed': Color(0xFFD32F2F),
+  'hongKongSkylineBlue': Color(0xFF00ACC1),
+  'harborGray': Color(0xFFBDB6B6),
+};
+
 const inputTextStyle = InputDecoration(
   hintText: 'Type the translation',
-  hintStyle: TextStyle(color: Colors.red),
+  hintStyle: TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.red, width: 2),
+  ),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.red, width: 2),
   ),

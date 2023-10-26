@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:canto/Database/phrases_database.dart';
 import 'package:canto/Database/phrase.dart';
 import 'add_edit_phrase_screen.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'phrase_detail_screen.dart';
 import '../Components/phrase_card.dart';
 import 'quiz_screen.dart';
+import 'package:canto/utilities.dart';
 
 class VocabularyScreen extends StatefulWidget {
   final PhrasesDatabase phrasesDatabase;
@@ -34,30 +34,6 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     setState(() => isLoading = false);
   }
 
-  Widget buildPhrases() => StaggeredGrid.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: 2,
-      crossAxisSpacing: 2,
-      children: List.generate(
-        phrases.length,
-        (index) {
-          final phrase = phrases[index];
-
-          return StaggeredGridTile.fit(
-            crossAxisCellCount: 1,
-            child: GestureDetector(
-              onTap: () async {
-                await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PhraseDetailPage(phraseId: phrase.id!),
-                ));
-                refreshPhrases();
-              },
-              child: PhraseCardWidget(phrase: phrase, index: index),
-            ),
-          );
-        },
-      ));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,10 +46,24 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           },
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          buildPhrases(),
-        ],
+      body: Scrollbar(
+        child: ListView.builder(
+          itemCount: phrases.length,
+          itemBuilder: (context, index) {
+            final phrase = phrases[index];
+            final color = palette.values.elementAt(index%palette.length);
+            return GestureDetector(
+              onTap: () async {
+                await Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PhraseDetailPage(phraseId: phrase.id!),
+                ));
+                refreshPhrases();
+              },
+              child: PhraseCardWidget(phrase: phrase, index: index, color: color),
+
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,

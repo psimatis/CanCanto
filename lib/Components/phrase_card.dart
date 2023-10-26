@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 import '../Database/phrase.dart';
-
-final _lightColors = [
-  Colors.amber.shade300,
-  Colors.lightGreen.shade300,
-  Colors.lightBlue.shade300,
-  Colors.orange.shade300,
-  Colors.pinkAccent.shade100,
-  Colors.tealAccent.shade100
-];
+import 'package:canto/utilities.dart';
 
 class PhraseCardWidget extends StatelessWidget {
+
+
   const PhraseCardWidget({
     Key? key,
     required this.phrase,
     required this.index,
+    required this.color,
   }) : super(key: key);
 
   final Phrase phrase;
   final int index;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    final color = _lightColors[index % _lightColors.length];
-    final minHeight = getMinHeight(index);
+    const height = 50.0;
 
     return Card(
       color: color,
       child: Container(
-        constraints: BoxConstraints(minHeight: minHeight),
+        constraints: BoxConstraints(minHeight: height),
         padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -47,16 +42,5 @@ class PhraseCardWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  double getMinHeight(int index) {
-    switch (index % 2) {
-      case 0:
-        return 100;
-      case 1:
-        return 150;
-      default:
-        return 100;
-    }
   }
 }

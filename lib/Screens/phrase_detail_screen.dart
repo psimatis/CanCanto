@@ -4,7 +4,7 @@ import '../Database/phrase.dart';
 import './add_edit_phrase_screen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:canto/constants.dart';
+import 'package:canto/utilities.dart';
 
 class PhraseDetailPage extends StatefulWidget {
   final int phraseId;

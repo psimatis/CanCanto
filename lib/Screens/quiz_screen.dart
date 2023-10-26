@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'vocabulary_screen.dart';
-import 'package:canto/constants.dart';
+import 'package:canto/utilities.dart';
 import 'package:canto/Database/phrases_database.dart';
 import 'package:canto/Database/phrase.dart';
 import 'dart:math';
