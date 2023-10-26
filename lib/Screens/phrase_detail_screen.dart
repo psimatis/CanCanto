@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../Database/phrases_database.dart';
 import '../Database/phrase.dart';
 import './add_edit_phrase_screen.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:canto/constants.dart';
 
 class PhraseDetailPage extends StatefulWidget {
   final int phraseId;
@@ -13,11 +16,6 @@ class PhraseDetailPage extends StatefulWidget {
 
   @override
   State<PhraseDetailPage> createState() => _PhraseDetailPageState();
-}
-
-String getSuccessRate(Phrase p) {
-  double rate = p.successes / p.successes * 100;
-  return rate.isNaN ? '' : 'Success Rate: ${(rate).toStringAsFixed(0)}%';
 }
 
 class _PhraseDetailPageState extends State<PhraseDetailPage> {
@@ -41,7 +39,8 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
         appBar: AppBar(
           actions: [editButton(), deleteButton()],
         ),
-        body: isLoading ? const Center(child: CircularProgressIndicator())
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
             : Padding(
                 padding: const EdgeInsets.all(12),
                 child: ListView(
@@ -55,18 +54,28 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const SizedBox(height: 8),
-                    Text(
-                      phrase.english,
-                      style:
-                          const TextStyle(color: Colors.white70, fontSize: 18),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Success rate: ${phrase.successes}/${phrase.attempts} | ${getSuccessRate(phrase)}',
-                      style:
-                      const TextStyle(color: Colors.white70, fontSize: 18),
+                    FieldDivider(),
+                    InfoText(text: 'Translation: ${phrase.english}'),
+                    FieldDivider(),
+                    InfoText(text: 'Comment: blabla'),
+                    FieldDivider(),
+                    InfoText(
+                        text:
+                            'Success/Attempts: ${phrase.successes}/${phrase.attempts}'),
+                    FieldDivider(),
+                    CircularPercentIndicator(
+                      radius: 50.0,
+                      lineWidth: 20.0,
+                      percent: phrase.getSuccessRate() / 100,
+                      center: Text('${phrase.getSuccessRate()}%'),
+                      backgroundColor: Colors.transparent,
+                      animation: true,
+                      linearGradient: Gradients.hotLinear,
+                      footer: Text(
+                        'Success Rate',
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 18),
+                      ),
                     )
                   ],
                 ),

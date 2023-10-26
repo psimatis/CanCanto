@@ -24,6 +24,9 @@ It consists of four screens:
 - Add statistics in detail page (e.g., attempts, success rate).
 
 ## ToDo
+- Add comment for each phrase.
+- Add correct phrase if I made a mistake.
+- Add search in vocabulary.
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
 - Add statistics plot in detail page. 
 - Add statistics depending on the translation order.

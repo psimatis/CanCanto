@@ -25,6 +25,11 @@ class Phrase {
     required this.successes,
   });
 
+  int getSuccessRate() {
+    double rate = successes / attempts * 100;
+    return rate.isNaN ? 0 : rate.round();
+  }
+
   Phrase copy({
     int? id,
     String? cantonese,
