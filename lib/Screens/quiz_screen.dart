@@ -16,10 +16,8 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  Phrase quizPhrase =
-      Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
-  Phrase previousPhrase =
-      Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
+  Phrase quizPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
+  Phrase previousPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
@@ -39,8 +37,6 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  String edit(String s) => s.trim().toLowerCase();
-
   String getTranslationOrder(Phrase p) {
     order = Random().nextDouble() > 0.5 ? canToEng : !canToEng;
     return order ? p.cantonese : p.english;
@@ -51,13 +47,11 @@ class _QuizScreenState extends State<QuizScreen> {
     attempts++;
     Phrase updatedPhrase = quizPhrase.copy(attempts: quizPhrase.attempts + 1);
 
-    String translation =
-        order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
+    String translation = order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
 
     if (edit(userInput.text) == translation) {
       correctAttempts++;
-      updatedPhrase =
-          updatedPhrase.copy(successes: updatedPhrase.successes + 1);
+      updatedPhrase = updatedPhrase.copy(successes: updatedPhrase.successes + 1);
     } else {
       result = 'Wrong!';
     }
@@ -81,63 +75,69 @@ class _QuizScreenState extends State<QuizScreen> {
         title: const Text('Can Canto'),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${previousPhrase.cantonese} - ${previousPhrase.english}',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.white38,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              getTranslationOrder(quizPhrase),
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: userInput,
-              decoration: inputTextStyle,
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                checkInput();
-                getNewPhrase();
-                previousPhrase = quizPhrase;
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red, // Set the button's background color to red
-              ),
-              child: const Text(
-                'Check',
-                style: TextStyle(
-                  fontSize: 22,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${previousPhrase.cantonese} - ${previousPhrase.english}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 16),
+                Text(
+                  getTranslationOrder(quizPhrase),
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: userInput,
+                  decoration: inputTextStyle,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    checkInput();
+                    getNewPhrase();
+                    previousPhrase = quizPhrase;
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    minimumSize: Size(200, 50),
+                  ),
+                  child: const Text(
+                    'Check',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  resultMessage,
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Success Rates: ${getRunSuccessRate()}% | ${quizPhrase.getSuccessRate()}%',
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            Text(
-              resultMessage,
-              style: TextStyle(
-                fontSize: 30,
-                color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Success Rates: ${getRunSuccessRate()}% | ${quizPhrase.getSuccessRate()}%',
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

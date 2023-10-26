@@ -31,7 +31,7 @@ It consists of four screens:
 
 ## ToDo
 - Add comment for each phrase.
-
+- Add search support for english
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
 - Add statistics depending on the translation order.
 - Move database file to an easy to find location.

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 const bool canToEng = true;
 
+String edit(String s) => s.trim().toLowerCase();
+
 const Map<String, Color> palette = {
   'cantoneseGold': Color(0xFFFFD600),
   'dragonBoatGreen': Color(0xFF3FA443),

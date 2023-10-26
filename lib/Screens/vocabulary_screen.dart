@@ -36,15 +36,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   }
 
   List<Phrase> filterPhrases() {
-    if (searchQuery.isEmpty) {
-      return phrases; // Return all phrases if the search query is empty
-    } else {
+    if (searchQuery.isNotEmpty) {
       return phrases.where((phrase) {
-        return phrase.cantonese
-            .toLowerCase()
-            .contains(searchQuery.toLowerCase());
+        return edit(phrase.cantonese).contains(edit(searchQuery));
       }).toList();
     }
+    return phrases;
   }
 
   @override
@@ -62,14 +59,18 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       ),
       body: Column(
         children: [
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                searchQuery = value;
-              });
-            },
-            decoration: InputDecoration(
-              hintText: 'Search for a phrase',
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
+              decoration: const InputDecoration(
+                hintText: 'Search for a phrase',
+                prefixIcon: Icon(Icons.search),
+              ),
             ),
           ),
           Expanded(

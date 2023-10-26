@@ -36,47 +36,52 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          actions: [editButton(), deleteButton()],
-        ),
-        body: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.all(12),
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  children: [
-                    Text(
-                      phrase.cantonese,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    FieldDivider(),
-                    InfoText(text: 'Translation: ${phrase.english}'),
-                    FieldDivider(),
-                    InfoText(text: 'Comment: blabla'),
-                    FieldDivider(),
-                    InfoText(
-                        text:
-                            'Success/Attempts: ${phrase.successes}/${phrase.attempts}'),
-                    FieldDivider(),
-                    CircularPercentIndicator(
-                      radius: 50.0,
-                      lineWidth: 20.0,
-                      percent: phrase.getSuccessRate() / 100,
-                      center: Text('${phrase.getSuccessRate()}%'),
-                      backgroundColor: Colors.transparent,
-                      animation: true,
-                      linearGradient: Gradients.hotLinear,
-                      footer: InfoText(text: 'Success Rate'),
-                    )
-                  ],
-                ),
+    appBar: AppBar(
+      actions: [editButton(), deleteButton()],
+    ),
+    body: isLoading
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            phrase.cantonese,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          FieldDivider(),
+          InfoText(text: 'Translation: ${phrase.english}'),
+          FieldDivider(),
+          InfoText(text: 'Comment: blabla'),
+          FieldDivider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InfoText(
+                  text:
+                  'Success/Attempts: ${phrase.successes}/${phrase.attempts}'),
+              CircularPercentIndicator(
+                radius: 50.0,
+                lineWidth: 8.0,
+                percent: phrase.getSuccessRate() / 100,
+                center: Text('${phrase.getSuccessRate()}%'),
+                backgroundColor: Colors.transparent,
+                animation: true,
+                linearGradient: Gradients.hotLinear,
+                footer: InfoText(text: 'Success Rate'),
               ),
-      );
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 
   Widget editButton() => IconButton(
       icon: const Icon(Icons.edit_outlined),
@@ -91,11 +96,11 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
       });
 
   Widget deleteButton() => IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: () async {
-          await PhrasesDatabase.instance.delete(widget.phraseId);
+    icon: const Icon(Icons.delete),
+    onPressed: () async {
+      await PhrasesDatabase.instance.delete(widget.phraseId);
 
-          Navigator.of(context).pop();
-        },
-      );
+      Navigator.of(context).pop();
+    },
+  );
 }
