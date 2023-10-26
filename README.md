@@ -22,13 +22,13 @@ It consists of four screens:
 - Hid success rate if the user hasn't started the quiz.
 - Added floating action button to navigate from quiz to vocabulary.
 - Add statistics in detail page (e.g., attempts, success rate).
+- Add correct (previous) phrase to facilitate learning.
+- Add statistics plot in detail page.
 
 ## ToDo
 - Add comment for each phrase.
-- Add correct phrase if I made a mistake.
 - Add search in vocabulary.
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
-- Add statistics plot in detail page. 
 - Add statistics depending on the translation order.
 - Redesign vocabulary screen to a scrollable list of words (instead of a grid).
 - Move database file to an easy to find location.

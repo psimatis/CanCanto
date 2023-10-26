@@ -50,15 +50,11 @@ class PhraseCardWidget extends StatelessWidget {
   }
 
   double getMinHeight(int index) {
-    switch (index % 4) {
+    switch (index % 2) {
       case 0:
         return 100;
       case 1:
         return 150;
-      case 2:
-        return 150;
-      case 3:
-        return 100;
       default:
         return 100;
     }

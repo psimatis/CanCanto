@@ -48,7 +48,6 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
                 setState(() => this.cantonese = cantonese),
             onChangedEnglish: (english) =>
                 setState(() => this.english = english),
-            // Todo: maybe add similar for counts
           ),
         ),
       );
@@ -61,7 +60,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: isFormValid ? null : Colors.red,
+          backgroundColor: Colors.red,
         ),
         onPressed: addOrUpdateNote,
         child: const Text('Save'),

@@ -71,11 +71,7 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
                       backgroundColor: Colors.transparent,
                       animation: true,
                       linearGradient: Gradients.hotLinear,
-                      footer: Text(
-                        'Success Rate',
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 18),
-                      ),
+                      footer: InfoText(text: 'Success Rate'),
                     )
                   ],
                 ),

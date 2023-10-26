@@ -1,7 +1,13 @@
 final String tablePhrases = 'phrases';
 
 class PhraseFields {
-  static final List<String> values = [id, cantonese, english, attempts, successes];
+  static final List<String> values = [
+    id,
+    cantonese,
+    english,
+    attempts,
+    successes
+  ];
 
   static final String id = '_id';
   static final String cantonese = 'cantonese';

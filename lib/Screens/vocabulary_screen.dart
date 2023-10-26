@@ -62,25 +62,34 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Vocabulary'),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushNamed(context, QuizScreen.id);
-            },
-          )),
+        title: const Text('Vocabulary'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, QuizScreen.id);
+          },
+        ),
+      ),
       body: ListView(
         children: <Widget>[
           buildPhrases(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () async {
-            await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const AddEditPhrasePage()));
-            refreshPhrases();
-          }),
+        backgroundColor: Colors.red,
+        onPressed: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddEditPhrasePage(),
+            ),
+          );
+          refreshPhrases();
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

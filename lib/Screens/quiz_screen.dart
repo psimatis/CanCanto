@@ -18,7 +18,8 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   Phrase quizPhrase =
       Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
-  Phrase previousPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
+  Phrase previousPhrase =
+      Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
@@ -61,11 +62,11 @@ class _QuizScreenState extends State<QuizScreen> {
       result = 'Wrong!';
     }
 
+    PhrasesDatabase.instance.update(updatedPhrase);
     setState(() {
       resultMessage = result;
       userInput.clear();
     });
-    PhrasesDatabase.instance.update(updatedPhrase);
   }
 
   int getRunSuccessRate() {
@@ -84,7 +85,6 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Text(
               '${previousPhrase.cantonese} - ${previousPhrase.english}',
               style: const TextStyle(
@@ -92,9 +92,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 color: Colors.white38,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               getTranslationOrder(quizPhrase),
               style: const TextStyle(
@@ -102,16 +100,12 @@ class _QuizScreenState extends State<QuizScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 10),
-
             TextField(
               controller: userInput,
               decoration: inputTextStyle,
             ),
-
             const SizedBox(height: 10),
-
             ElevatedButton(
               onPressed: () {
                 checkInput();
@@ -128,9 +122,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               resultMessage,
               style: TextStyle(
@@ -138,9 +130,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
               ),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               'Success Rates: ${getRunSuccessRate()}% | ${quizPhrase.getSuccessRate()}%',
               style: const TextStyle(
@@ -150,7 +140,6 @@ class _QuizScreenState extends State<QuizScreen> {
           ],
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, VocabularyScreen.id);

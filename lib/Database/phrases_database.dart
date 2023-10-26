@@ -28,7 +28,7 @@ class PhrasesDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const intType = 'INTEGER NOT NULL';
-    
+
     await db.execute('''
 CREATE TABLE $tablePhrases ( 
   ${PhraseFields.id} $idType, 
@@ -70,7 +70,9 @@ CREATE TABLE $tablePhrases (
 
   Future<Phrase> getRandomPhrase() async {
     final Database db = await database;
-    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ?? 0;
+    final count = Sqflite.firstIntValue(
+            await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ??
+        0;
 
     final randomOffset = Random().nextInt(count);
 
