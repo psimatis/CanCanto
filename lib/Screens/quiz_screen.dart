@@ -16,8 +16,8 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  Phrase quizPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
-  Phrase previousPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0);
+  Phrase quizPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
+  Phrase previousPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;

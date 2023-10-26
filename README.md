@@ -28,11 +28,9 @@ It consists of four screens:
 - Redesign vocabulary screen to a scrollable list of words (instead of a grid).
 - Added color palette.
 - Add search in vocabulary. It filters out words as you type.
+- Add search support for english
+- Add comment for each phrase.
+- Show phrase count in vocabulary page
 
 ## ToDo
-- Add comment for each phrase.
-- Add search support for english
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
-- Add statistics depending on the translation order.
-- Move database file to an easy to find location.
-- Code cleanup.

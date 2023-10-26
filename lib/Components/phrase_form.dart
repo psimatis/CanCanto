@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class PhraseFormWidget extends StatelessWidget {
   final String? cantonese;
   final String? english;
+  final String? comment;
   final ValueChanged<String> onChangedCantonese;
   final ValueChanged<String> onChangedEnglish;
+  final ValueChanged<String> onChangedComment;
 
   const PhraseFormWidget({
     Key? key,
@@ -12,8 +14,10 @@ class PhraseFormWidget extends StatelessWidget {
     this.english = '',
     required this.onChangedCantonese,
     required this.onChangedEnglish,
+    required this.onChangedComment,
     required int attempts,
     required int successes,
+    this.comment,
   }) : super(key: key);
 
   @override
@@ -29,6 +33,8 @@ class PhraseFormWidget extends StatelessWidget {
               buildPhrase(),
               const SizedBox(height: 8),
               buildTranslation(),
+              const SizedBox(height: 16),
+              buildComment(),
               const SizedBox(height: 16),
             ],
           ),
@@ -68,4 +74,16 @@ class PhraseFormWidget extends StatelessWidget {
             : null,
         onChanged: onChangedEnglish,
       );
+
+  Widget buildComment() => TextFormField(
+    maxLines: 5,
+    initialValue: comment,
+    style: const TextStyle(color: Colors.white60, fontSize: 18),
+    decoration: const InputDecoration(
+      border: InputBorder.none,
+      hintText: 'Comment',
+      hintStyle: TextStyle(color: Colors.white60),
+    ),
+    onChanged: onChangedComment,
+  );
 }

@@ -13,7 +13,7 @@ class PhrasesDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('test12.db');
+    _database = await _initDB('test13.db');
     return _database!;
   }
 
@@ -35,7 +35,8 @@ CREATE TABLE $tablePhrases (
   ${PhraseFields.cantonese} $textType,
   ${PhraseFields.english} $textType,
   ${PhraseFields.attempts} $intType,
-  ${PhraseFields.successes} $intType
+  ${PhraseFields.successes} $intType,
+  ${PhraseFields.comment} $textType
   )
 ''');
   }
@@ -70,9 +71,7 @@ CREATE TABLE $tablePhrases (
 
   Future<Phrase> getRandomPhrase() async {
     final Database db = await database;
-    final count = Sqflite.firstIntValue(
-            await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ??
-        0;
+    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ?? 0;
 
     final randomOffset = Random().nextInt(count);
 

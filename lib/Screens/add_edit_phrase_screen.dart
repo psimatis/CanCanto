@@ -21,6 +21,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
   late String english;
   late int attempts;
   late int successes;
+  late String comment;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
     english = widget.phrase?.english ?? '';
     attempts = widget.phrase?.attempts ?? 0;
     successes = widget.phrase?.successes ?? 0;
+    comment = widget.phrase?.comment ?? '';
   }
 
   @override
@@ -44,10 +46,13 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
             english: english,
             attempts: attempts,
             successes: successes,
+            comment: comment,
             onChangedCantonese: (cantonese) =>
                 setState(() => this.cantonese = cantonese),
             onChangedEnglish: (english) =>
                 setState(() => this.english = english),
+            onChangedComment: (comment) =>
+              setState(() => this.comment = comment),
           ),
         ),
       );
@@ -90,6 +95,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       english: english,
       attempts: attempts,
       successes: successes,
+      comment: comment,
     );
 
     await PhrasesDatabase.instance.update(note);
@@ -101,6 +107,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       english: english,
       attempts: attempts,
       successes: successes,
+      comment: comment,
     );
 
     await PhrasesDatabase.instance.create(phrase);

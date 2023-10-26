@@ -58,7 +58,7 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
           FieldDivider(),
           InfoText(text: 'Translation: ${phrase.english}'),
           FieldDivider(),
-          InfoText(text: 'Comment: blabla'),
+          InfoText(text: 'Comment: ${phrase.comment}'),
           FieldDivider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -21,6 +21,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   late List<Phrase> phrases;
   String searchQuery = '';
   bool isLoading = false; // TODO: See if I can remove this
+  int totalPhraseCount = 0;
 
   @override
   void initState() {
@@ -32,13 +33,16 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   Future refreshPhrases() async {
     setState(() => isLoading = true);
     phrases = await PhrasesDatabase.instance.readAllPhrases();
+    totalPhraseCount = phrases.length;
     setState(() => isLoading = false);
   }
 
   List<Phrase> filterPhrases() {
     if (searchQuery.isNotEmpty) {
       return phrases.where((phrase) {
-        return edit(phrase.cantonese).contains(edit(searchQuery));
+        final query = edit(searchQuery);
+        return edit(phrase.cantonese).contains(query) ||
+            edit(phrase.english).contains(query);
       }).toList();
     }
     return phrases;
@@ -49,7 +53,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     final filteredPhrases = filterPhrases();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vocabulary'),
+        title: Text('Vocabulary ($totalPhraseCount phrases)'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
