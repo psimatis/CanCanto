@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Database/phrase.dart';
-import 'package:canto/utilities.dart';
 
 class PhraseCardWidget extends StatelessWidget {
-
-
   const PhraseCardWidget({
     Key? key,
     required this.phrase,
@@ -31,7 +28,7 @@ class PhraseCardWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 4),
             Text(
-              phrase.cantonese,
+              '${phrase.cantonese} - ${phrase.english} - ${phrase.getSuccessRate()}%',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,

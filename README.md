@@ -25,12 +25,14 @@ It consists of four screens:
 - Add correct (previous) phrase to facilitate learning.
 - Add statistics plot in detail page.
 - Beautify go for all red theme
+- Redesign vocabulary screen to a scrollable list of words (instead of a grid).
+- Added color palette.
+- Add search in vocabulary. It filters out words as you type.
 
 ## ToDo
 - Add comment for each phrase.
-- Add search in vocabulary.
+
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
 - Add statistics depending on the translation order.
-- Redesign vocabulary screen to a scrollable list of words (instead of a grid).
 - Move database file to an easy to find location.
 - Code cleanup.

@@ -19,6 +19,7 @@ class VocabularyScreen extends StatefulWidget {
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
   late List<Phrase> phrases;
+  String searchQuery = '';
   bool isLoading = false; // TODO: See if I can remove this
 
   @override
@@ -34,8 +35,21 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     setState(() => isLoading = false);
   }
 
+  List<Phrase> filterPhrases() {
+    if (searchQuery.isEmpty) {
+      return phrases; // Return all phrases if the search query is empty
+    } else {
+      return phrases.where((phrase) {
+        return phrase.cantonese
+            .toLowerCase()
+            .contains(searchQuery.toLowerCase());
+      }).toList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredPhrases = filterPhrases();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vocabulary'),
@@ -46,24 +60,42 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           },
         ),
       ),
-      body: Scrollbar(
-        child: ListView.builder(
-          itemCount: phrases.length,
-          itemBuilder: (context, index) {
-            final phrase = phrases[index];
-            final color = palette.values.elementAt(index%palette.length);
-            return GestureDetector(
-              onTap: () async {
-                await Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PhraseDetailPage(phraseId: phrase.id!),
-                ));
-                refreshPhrases();
-              },
-              child: PhraseCardWidget(phrase: phrase, index: index, color: color),
-
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          TextField(
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
+            decoration: InputDecoration(
+              hintText: 'Search for a phrase',
+            ),
+          ),
+          Expanded(
+            child: Scrollbar(
+              child: ListView.builder(
+                itemCount: filteredPhrases.length,
+                itemBuilder: (context, index) {
+                  final phrase = filteredPhrases[index];
+                  final color =
+                      palette.values.elementAt(index % palette.length);
+                  return GestureDetector(
+                    onTap: () async {
+                      await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            PhraseDetailPage(phraseId: phrase.id!),
+                      ));
+                      refreshPhrases();
+                    },
+                    child: PhraseCardWidget(
+                        phrase: phrase, index: index, color: color),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
