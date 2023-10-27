@@ -20,8 +20,9 @@ class VocabularyScreen extends StatefulWidget {
 class _VocabularyScreenState extends State<VocabularyScreen> {
   late List<Phrase> phrases;
   String searchQuery = '';
-  bool isLoading = false; // TODO: See if I can remove this
+  bool isLoading = false;
   int totalPhraseCount = 0;
+  bool canLeaveScreen = false;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     setState(() => isLoading = true);
     phrases = await PhrasesDatabase.instance.readAllPhrases();
     totalPhraseCount = phrases.length;
+    canLeaveScreen = totalPhraseCount > 0 ? true : false;
     setState(() => isLoading = false);
   }
 
@@ -54,67 +56,80 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Vocabulary ($totalPhraseCount phrases)'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, QuizScreen.id);
+        leading: canLeaveScreen
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pushNamed(context, QuizScreen.id);
+                },
+              )
+            : const Text(''),
+      ),
+      body: canLeaveScreen
+          ? Column(children: [
+              buildSearchBar(),
+              buildVocabularyList(filteredPhrases),
+            ])
+          : const Center(
+              child: InfoText(text: 'Go ahead and add some phrases')),
+      floatingActionButton: buildAddPhraseActionButton(context),
+    );
+  }
+
+  FloatingActionButton buildAddPhraseActionButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.red,
+      onPressed: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const AddEditPhrasePage(),
+          ),
+        );
+        refreshPhrases();
+      },
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Expanded buildVocabularyList(List<Phrase> filteredPhrases) {
+    return Expanded(
+      child: Scrollbar(
+        child: ListView.builder(
+          itemCount: filteredPhrases.length,
+          itemBuilder: (context, index) {
+            final phrase = filteredPhrases[index];
+            final color = palette.values.elementAt(index % palette.length);
+            return GestureDetector(
+              onTap: () async {
+                await Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PhraseDetailPage(phraseId: phrase.id!),
+                ));
+                refreshPhrases();
+              },
+              child:
+                  PhraseCardWidget(phrase: phrase, index: index, color: color),
+            );
           },
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
-              },
-              decoration: const InputDecoration(
-                hintText: 'Search for a phrase',
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Scrollbar(
-              child: ListView.builder(
-                itemCount: filteredPhrases.length,
-                itemBuilder: (context, index) {
-                  final phrase = filteredPhrases[index];
-                  final color =
-                      palette.values.elementAt(index % palette.length);
-                  return GestureDetector(
-                    onTap: () async {
-                      await Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            PhraseDetailPage(phraseId: phrase.id!),
-                      ));
-                      refreshPhrases();
-                    },
-                    child: PhraseCardWidget(
-                        phrase: phrase, index: index, color: color),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        onPressed: () async {
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddEditPhrasePage(),
-            ),
-          );
-          refreshPhrases();
+    );
+  }
+
+  Padding buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: TextField(
+        onChanged: (value) {
+          setState(() {
+            searchQuery = value;
+          });
         },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+        decoration: const InputDecoration(
+          hintText: 'Search for a phrase',
+          prefixIcon: Icon(Icons.search),
         ),
       ),
     );

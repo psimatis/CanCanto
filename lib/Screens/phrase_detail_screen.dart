@@ -36,71 +36,75 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      actions: [editButton(), deleteButton()],
-    ),
-    body: isLoading
-        ? Center(child: CircularProgressIndicator())
-        : Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            phrase.cantonese,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          FieldDivider(),
-          InfoText(text: 'Translation: ${phrase.english}'),
-          FieldDivider(),
-          InfoText(text: 'Comment: ${phrase.comment}'),
-          FieldDivider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InfoText(
-                  text:
-                  'Success/Attempts: ${phrase.successes}/${phrase.attempts}'),
-              CircularPercentIndicator(
-                radius: 50.0,
-                lineWidth: 8.0,
-                percent: phrase.getSuccessRate() / 100,
-                center: Text('${phrase.getSuccessRate()}%'),
-                backgroundColor: Colors.transparent,
-                animation: true,
-                linearGradient: Gradients.hotLinear,
-                footer: InfoText(text: 'Success Rate'),
+        appBar: AppBar(
+          actions: [editButton(), deleteButton()],
+        ),
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildPhrase(),
+                    const SizedBox(height: 8),
+                    FieldDivider(),
+                    InfoText(text: 'Translation: ${phrase.english}'),
+                    FieldDivider(),
+                    InfoText(text: 'Comment: ${phrase.comment}'),
+                    FieldDivider(),
+                    buildStats(),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ],
+      );
+
+  Row buildStats() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InfoText(
+            text: 'Successes/Attempts: ${phrase.successes}/${phrase.attempts}'),
+        CircularPercentIndicator(
+          radius: 50.0,
+          lineWidth: 8.0,
+          percent: phrase.getSuccessRate() / 100,
+          center: Text('${phrase.getSuccessRate()}%'),
+          backgroundColor: Colors.transparent,
+          animation: true,
+          linearGradient: Gradients.hotLinear,
+          footer: InfoText(text: 'Success Rate'),
+        ),
+      ],
+    );
+  }
+
+  Text buildPhrase() {
+    return Text(
+      phrase.cantonese,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
       ),
-    ),
-  );
+    );
+  }
 
   Widget editButton() => IconButton(
       icon: const Icon(Icons.edit_outlined),
       onPressed: () async {
         if (isLoading) return;
-
         await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AddEditPhrasePage(phrase: phrase),
         ));
-
         refreshPhrase();
       });
 
   Widget deleteButton() => IconButton(
-    icon: const Icon(Icons.delete),
-    onPressed: () async {
-      await PhrasesDatabase.instance.delete(widget.phraseId);
-
-      Navigator.of(context).pop();
-    },
-  );
+        icon: const Icon(Icons.delete),
+        onPressed: () async {
+          await PhrasesDatabase.instance.delete(widget.phraseId);
+          Navigator.of(context).pop();
+        },
+      );
 }

@@ -31,6 +31,9 @@ It consists of four screens:
 - Add search support for english
 - Add comment for each phrase.
 - Show phrase count in vocabulary page
-
-## ToDo
+- Dont let user go to quiz screen if vocabulary is empty.
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
+- 
+## ToDo
+Refactoring
+

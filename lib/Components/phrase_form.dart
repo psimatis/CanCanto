@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:canto/utilities.dart';
 
 class PhraseFormWidget extends StatelessWidget {
   final String? cantonese;
@@ -27,15 +28,12 @@ class PhraseFormWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Row(
-                children: [],
-              ),
               buildPhrase(),
-              const SizedBox(height: 8),
+              FieldDivider(),
               buildTranslation(),
-              const SizedBox(height: 16),
+              FieldDivider(),
               buildComment(),
-              const SizedBox(height: 16),
+              FieldDivider(),
             ],
           ),
         ),
@@ -49,41 +47,40 @@ class PhraseFormWidget extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          hintText: 'Cantonese Phrase',
-          hintStyle: TextStyle(color: Colors.white70),
-        ),
-        validator: (phrase) => phrase != null && phrase.isEmpty
-            ? 'The phrase cannot be empty'
-            : null,
+        decoration: inputDecorator('Cantonese Phrase'),
+        validator: (phrase) => validateInput(phrase, 'phrase'),
         onChanged: onChangedCantonese,
       );
 
   Widget buildTranslation() => TextFormField(
-        maxLines: 5,
+        maxLines: 1,
         initialValue: english,
         style: const TextStyle(color: Colors.white60, fontSize: 18),
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          hintText: 'English translation',
-          hintStyle: TextStyle(color: Colors.white60),
-        ),
-        validator: (translation) => translation != null && translation.isEmpty
-            ? 'The translation cannot be empty'
-            : null,
+        decoration: inputDecorator('English Translation'),
+        validator: (translation) => validateInput(translation, 'translation'),
         onChanged: onChangedEnglish,
       );
 
   Widget buildComment() => TextFormField(
-    maxLines: 5,
-    initialValue: comment,
-    style: const TextStyle(color: Colors.white60, fontSize: 18),
-    decoration: const InputDecoration(
-      border: InputBorder.none,
-      hintText: 'Comment',
-      hintStyle: TextStyle(color: Colors.white60),
-    ),
-    onChanged: onChangedComment,
+        maxLines: 5,
+        initialValue: comment,
+        style: const TextStyle(color: Colors.white60, fontSize: 18),
+        decoration: inputDecorator('Comment'),
+        onChanged: onChangedComment,
+      );
+}
+
+InputDecoration inputDecorator(String hintText) {
+  return InputDecoration(
+    border: InputBorder.none,
+    hintText: hintText,
+    hintStyle: const TextStyle(color: Colors.white60),
   );
+}
+
+String? validateInput(String? value, String component) {
+  if (value != null && value.isEmpty) {
+    return 'The $component cannot be empty';
+  }
+  return null;
 }

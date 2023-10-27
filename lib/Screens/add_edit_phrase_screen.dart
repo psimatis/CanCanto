@@ -26,7 +26,6 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
   @override
   void initState() {
     super.initState();
-
     cantonese = widget.phrase?.cantonese ?? '';
     english = widget.phrase?.english ?? '';
     attempts = widget.phrase?.attempts ?? 0;
@@ -37,7 +36,7 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          actions: [buildButton()],
+          actions: [buildSaveButton()],
         ),
         body: Form(
           key: _formKey,
@@ -52,14 +51,12 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
             onChangedEnglish: (english) =>
                 setState(() => this.english = english),
             onChangedComment: (comment) =>
-              setState(() => this.comment = comment),
+                setState(() => this.comment = comment),
           ),
         ),
       );
 
-  Widget buildButton() {
-    final isFormValid = cantonese.isNotEmpty && english.isNotEmpty;
-
+  Widget buildSaveButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: ElevatedButton(
@@ -75,16 +72,9 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
 
   void addOrUpdateNote() async {
     final isValid = _formKey.currentState!.validate();
-
     if (isValid) {
       final isUpdating = widget.phrase != null;
-
-      if (isUpdating) {
-        await updateNote();
-      } else {
-        await addNote();
-      }
-
+      isUpdating ? await updateNote() : await addNote();
       Navigator.of(context).pop();
     }
   }
@@ -97,7 +87,6 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       successes: successes,
       comment: comment,
     );
-
     await PhrasesDatabase.instance.update(note);
   }
 
@@ -109,7 +98,6 @@ class _AddEditPhrasePageState extends State<AddEditPhrasePage> {
       successes: successes,
       comment: comment,
     );
-
     await PhrasesDatabase.instance.create(phrase);
   }
 }

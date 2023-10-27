@@ -5,14 +5,12 @@ import 'dart:math';
 
 class PhrasesDatabase {
   static final PhrasesDatabase instance = PhrasesDatabase._init();
-
   static Database? _database;
 
   PhrasesDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-
     _database = await _initDB('test13.db');
     return _database!;
   }
@@ -20,7 +18,6 @@ class PhrasesDatabase {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
@@ -28,7 +25,6 @@ class PhrasesDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const intType = 'INTEGER NOT NULL';
-
     await db.execute('''
 CREATE TABLE $tablePhrases ( 
   ${PhraseFields.id} $idType, 
@@ -54,14 +50,12 @@ CREATE TABLE $tablePhrases (
 
   Future<Phrase> readPhrase(int id) async {
     final db = await instance.database;
-
     final maps = await db.query(
       tablePhrases,
       columns: PhraseFields.values,
       where: '${PhraseFields.id} = ?',
       whereArgs: [id],
     );
-
     if (maps.isNotEmpty) {
       return Phrase.fromJson(maps.first);
     } else {
@@ -71,10 +65,10 @@ CREATE TABLE $tablePhrases (
 
   Future<Phrase> getRandomPhrase() async {
     final Database db = await database;
-    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ?? 0;
-
+    final count = Sqflite.firstIntValue(
+            await db.rawQuery('SELECT COUNT(*) FROM $tablePhrases')) ??
+        0;
     final randomOffset = Random().nextInt(count);
-
     final maps = await db.query(
       tablePhrases,
       columns: PhraseFields.values,
@@ -82,7 +76,6 @@ CREATE TABLE $tablePhrases (
       limit: 1,
       offset: randomOffset,
     );
-
     return Phrase.fromJson(maps.first);
   }
 
@@ -94,7 +87,6 @@ CREATE TABLE $tablePhrases (
 
   Future<int> update(Phrase phrase) async {
     final db = await instance.database;
-
     return db.update(
       tablePhrases,
       phrase.toJson(),
@@ -105,7 +97,6 @@ CREATE TABLE $tablePhrases (
 
   Future<int> delete(int id) async {
     final db = await instance.database;
-
     return await db.delete(
       tablePhrases,
       where: '${PhraseFields.id} = ?',

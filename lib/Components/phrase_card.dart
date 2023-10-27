@@ -20,7 +20,7 @@ class PhraseCardWidget extends StatelessWidget {
     return Card(
       color: color,
       child: Container(
-        constraints: BoxConstraints(minHeight: height),
+        constraints: const BoxConstraints(minHeight: height),
         padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,

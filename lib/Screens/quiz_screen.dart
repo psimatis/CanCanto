@@ -16,8 +16,10 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  Phrase quizPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
-  Phrase previousPhrase = Phrase(cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
+  Phrase quizPhrase = Phrase(
+      cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
+  Phrase previousPhrase = Phrase(
+      cantonese: '', english: '', attempts: 0, successes: 0, comment: '');
   TextEditingController userInput = TextEditingController();
   String resultMessage = '';
   int attempts = 0;
@@ -47,11 +49,13 @@ class _QuizScreenState extends State<QuizScreen> {
     attempts++;
     Phrase updatedPhrase = quizPhrase.copy(attempts: quizPhrase.attempts + 1);
 
-    String translation = order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
+    String translation =
+        order ? edit(quizPhrase.english) : edit(quizPhrase.cantonese);
 
     if (edit(userInput.text) == translation) {
       correctAttempts++;
-      updatedPhrase = updatedPhrase.copy(successes: updatedPhrase.successes + 1);
+      updatedPhrase =
+          updatedPhrase.copy(successes: updatedPhrase.successes + 1);
     } else {
       result = 'Wrong!';
     }
@@ -82,72 +86,96 @@ class _QuizScreenState extends State<QuizScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '${previousPhrase.cantonese} - ${previousPhrase.english}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
+                buildPreviousPhrase(),
                 const SizedBox(height: 16),
-                Text(
-                  getTranslationOrder(quizPhrase),
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                buildQuizPhrase(),
                 const SizedBox(height: 16),
                 TextField(
                   controller: userInput,
                   decoration: inputTextStyle,
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    checkInput();
-                    getNewPhrase();
-                    previousPhrase = quizPhrase;
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    minimumSize: Size(200, 50),
-                  ),
-                  child: const Text(
-                    'Check',
-                    style: TextStyle(
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
+                buildCheckButton(),
                 const SizedBox(height: 10),
-                Text(
-                  resultMessage,
-                  style: TextStyle(
-                    fontSize: 32,
-                    color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
-                  ),
-                ),
+                buildResultMessage(),
                 const SizedBox(height: 10),
-                Text(
-                  'Success Rates: ${getRunSuccessRate()}% | ${quizPhrase.getSuccessRate()}%',
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                buildScores(),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, VocabularyScreen.id);
-        },
-        backgroundColor: Colors.red,
-        child: const Icon(
-          Icons.library_books,
-          color: Colors.white,
+      floatingActionButton: buildVocabularyActionButton(context),
+    );
+  }
+
+  FloatingActionButton buildVocabularyActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, VocabularyScreen.id);
+      },
+      backgroundColor: Colors.red,
+      child: const Icon(
+        Icons.library_books,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Text buildScores() {
+    return Text(
+      'Success Rates: ${getRunSuccessRate()}% | ${quizPhrase.getSuccessRate()}%',
+      style: const TextStyle(
+        fontSize: 18,
+      ),
+    );
+  }
+
+  Text buildResultMessage() {
+    return Text(
+      resultMessage,
+      style: TextStyle(
+        fontSize: 32,
+        color: resultMessage == 'Correct!' ? Colors.green : Colors.red,
+      ),
+    );
+  }
+
+  Text buildQuizPhrase() {
+    return Text(
+      getTranslationOrder(quizPhrase),
+      style: const TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Text buildPreviousPhrase() {
+    return Text(
+      '${previousPhrase.cantonese} - ${previousPhrase.english}',
+      style: const TextStyle(
+        fontSize: 14,
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  ElevatedButton buildCheckButton() {
+    return ElevatedButton(
+      onPressed: () {
+        checkInput();
+        getNewPhrase();
+        previousPhrase = quizPhrase;
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red,
+        minimumSize: Size(200, 50),
+      ),
+      child: const Text(
+        'Check',
+        style: TextStyle(
+          fontSize: 22,
         ),
       ),
     );
