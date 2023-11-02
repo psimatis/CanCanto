@@ -24,6 +24,7 @@ class CanCantoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.black,

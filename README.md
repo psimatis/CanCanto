@@ -2,7 +2,7 @@
 A mobile app to teach myself Flutter and Cantonese.
 
 ## Target Specs
-The app is essentially a flash card with english-cantonese translations. 
+A flash card app with english-cantonese translations and performance statistics. 
 It consists of four screens: 
 1) Quiz: Quizzes the user to translate random phrases and shows performance stats.
 2) Vocabulary: Lists all phrases and allows CRUD operations.
@@ -33,7 +33,10 @@ It consists of four screens:
 - Show phrase count in vocabulary page
 - Dont let user go to quiz screen if vocabulary is empty.
 - Add message in vocabulary screen asking the user to add a phrase if the DB is empty.
+- Refactoring
 - 
 ## ToDo
-Refactoring
+- Find logo and change icon
+- Write readme
+- 
 

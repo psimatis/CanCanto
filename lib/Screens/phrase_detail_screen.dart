@@ -42,12 +42,11 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     buildPhrase(),
-                    const SizedBox(height: 8),
                     FieldDivider(),
                     InfoText(text: 'Translation: ${phrase.english}'),
                     FieldDivider(),
@@ -61,19 +60,20 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
 
   Row buildStats() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         InfoText(
             text: 'Successes/Attempts: ${phrase.successes}/${phrase.attempts}'),
+        const SizedBox(width: 45),
         CircularPercentIndicator(
-          radius: 50.0,
+          radius: 40.0,
           lineWidth: 8.0,
           percent: phrase.getSuccessRate() / 100,
           center: Text('${phrase.getSuccessRate()}%'),
           backgroundColor: Colors.transparent,
           animation: true,
           linearGradient: Gradients.hotLinear,
-          footer: InfoText(text: 'Success Rate'),
+          footer: InfoText(text: 'Rate'),
         ),
       ],
     );
@@ -86,6 +86,7 @@ class _PhraseDetailPageState extends State<PhraseDetailPage> {
         color: Colors.white,
         fontSize: 22,
         fontWeight: FontWeight.bold,
+        height: 2,
       ),
     );
   }
