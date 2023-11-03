@@ -2,6 +2,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'phrase.dart';
 import 'dart:math';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class PhrasesDatabase {
   static final PhrasesDatabase instance = PhrasesDatabase._init();
@@ -16,8 +18,10 @@ class PhrasesDatabase {
   }
 
   Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+    // final dbPath = await getDatabasesPath();
+    final dbPath = await getApplicationDocumentsDirectory();
+    final path = join(dbPath.path, filePath);
+    print('GOT THE PATH BRO: $path');
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
@@ -107,5 +111,41 @@ CREATE TABLE $tablePhrases (
   Future close() async {
     final db = await instance.database;
     db.close();
+  }
+
+  Future<String?> exportDatabase() async {
+    try {
+      // Get the path to the current database file, if available
+      final dbPath = await getApplicationDocumentsDirectory();
+      final path = join(dbPath.path, 'test13.db');
+      final databasePath = path;
+
+      if (databasePath != null) {
+
+        // Generate a new filename for the exported database
+        final fileName = 'exported_database.db';
+
+        // Get the path to the downloads folder, if available
+        final downloadsDirectory = await getDownloadsDirectory();
+
+        if (downloadsDirectory != null) {
+
+          // Construct the full path for the exported database in the downloads folder
+          final exportedFilePath = join(downloadsDirectory.path, fileName);
+
+          // Copy the database file to the downloads folder
+          await File(databasePath).copy(exportedFilePath);
+          print('EXPORTED BRO $exportedFilePath');
+          // Return the path to the exported database
+          return exportedFilePath;
+        }
+      }
+    } catch (e) {
+      // Handle errors if the export fails
+      print('Error exporting database: $e');
+      // You might want to throw an exception or handle the error differently
+    }
+    // Return null if something went wrong
+    return null;
   }
 }

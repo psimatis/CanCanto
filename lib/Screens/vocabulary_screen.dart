@@ -50,6 +50,10 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     return phrases;
   }
 
+  Future<void> _exportDatabase() async {
+    await widget.phrasesDatabase.exportDatabase();
+  }
+
   @override
   Widget build(BuildContext context) {
     final filteredPhrases = filterPhrases();
@@ -64,6 +68,13 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 },
               )
             : const Text(''),
+        actions: <Widget>[
+          // Add Export Database button to the AppBar
+          IconButton(
+            icon: const Icon(Icons.cloud_download),
+            onPressed: () => _exportDatabase(),
+          ),
+        ],
       ),
       body: canLeaveScreen
           ? Column(children: [
